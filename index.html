@@ -1,0 +1,1827 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EyeMatic | Eyewear and HD Lenses in Wah Cantt</title>
+  <meta name="description" content="EyeMatic prototype eyewear store with frames, high definition lenses, progressive lens packages, cart, checkout, and contact details for New City Phase 2, Wah Cantt.">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://images.pexels.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #17100c;
+      --muted: #6f5e4e;
+      --line: #d8bd8d;
+      --paper: #f3dfc9;
+      --surface: #fff8ef;
+      --teal: #b50909;
+      --teal-dark: #7b0908;
+      --amber: #c28a22;
+      --blue: #9a6a1e;
+      --rose: #a90909;
+      --gold: #c28a22;
+      --maroon: #760a08;
+      --shadow: 0 18px 40px rgba(82, 32, 18, 0.16);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      padding: 8px 18px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .topbar span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 14px clamp(18px, 4vw, 56px);
+      background: rgba(255, 248, 239, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      font-weight: 800;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      overflow: hidden;
+      color: #fff;
+      background: #050708;
+      border: 1px solid rgba(23, 33, 38, 0.12);
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(23, 33, 38, 0.12);
+    }
+
+    .brand-logo {
+      width: clamp(180px, 19vw, 260px);
+      height: auto;
+      object-fit: contain;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: clamp(12px, 2vw, 28px);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      padding: 8px 0;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-button,
+    .link-button,
+    .primary-button,
+    .secondary-button,
+    .ghost-button,
+    .filter-button,
+    .qty-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .icon-button {
+      position: relative;
+      width: 44px;
+      color: var(--ink);
+      background: var(--surface);
+      border-color: var(--line);
+    }
+
+    .icon-button:hover,
+    .filter-button:hover,
+    .ghost-button:hover,
+    .secondary-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--teal);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -7px;
+      right: -7px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--rose);
+      font-size: 12px;
+      line-height: 22px;
+      text-align: center;
+    }
+
+    .primary-button {
+      padding: 0 18px;
+      color: #fff;
+      background: var(--teal);
+    }
+
+    .primary-button:hover {
+      transform: translateY(-1px);
+      background: var(--teal-dark);
+    }
+
+    .secondary-button,
+    .ghost-button,
+    .filter-button {
+      padding: 0 16px;
+      color: var(--ink);
+      background: var(--surface);
+      border-color: var(--line);
+    }
+
+    .ghost-button {
+      min-height: 36px;
+      padding: 0 12px;
+      color: var(--teal-dark);
+      background: transparent;
+    }
+
+    .link-button {
+      min-height: 36px;
+      padding: 0;
+      color: var(--teal-dark);
+      background: transparent;
+      border: 0;
+    }
+
+    .filter-button.is-active {
+      color: #fff;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .hero {
+      min-height: 620px;
+      display: grid;
+      align-items: end;
+      padding: clamp(70px, 10vw, 126px) clamp(18px, 5vw, 68px) 38px;
+      color: #fff;
+      background:
+        linear-gradient(90deg, rgba(65, 10, 7, 0.9), rgba(99, 17, 10, 0.62) 45%, rgba(99, 17, 10, 0.16)),
+        url("https://images.pexels.com/photos/32593248/pexels-photo-32593248.jpeg?auto=compress&cs=tinysrgb&w=1800") center/cover;
+    }
+
+    .hero-inner {
+      width: min(1120px, 100%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: #f2c86d;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(44px, 7vw, 84px);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: clamp(17px, 2vw, 21px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .hero-actions .secondary-button {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .hero-facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      width: min(940px, 100%);
+      margin-top: 46px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-facts div {
+      min-height: 94px;
+      padding: 16px;
+      background: rgba(11, 17, 20, 0.32);
+    }
+
+    .hero-facts strong {
+      display: block;
+      font-size: 21px;
+      line-height: 1.1;
+    }
+
+    .hero-facts span {
+      display: block;
+      margin-top: 6px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .section {
+      padding: clamp(54px, 7vw, 86px) clamp(18px, 5vw, 68px);
+    }
+
+    .section-alt {
+      background: #ecd4b8;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      width: min(1180px, 100%);
+      margin: 0 auto 28px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .section-header p {
+      max-width: 520px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .category-section {
+      background: var(--surface);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .category-card {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 286px;
+      overflow: hidden;
+      padding: 0;
+      color: var(--ink);
+      text-align: left;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(23, 33, 38, 0.06);
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .category-card:hover,
+    .category-card.is-active {
+      transform: translateY(-2px);
+      border-color: var(--teal);
+      box-shadow: 0 14px 34px rgba(23, 33, 38, 0.12);
+    }
+
+    .category-card:focus-visible {
+      outline: 3px solid rgba(13, 124, 117, 0.28);
+      outline-offset: 3px;
+    }
+
+    .category-media {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      min-height: 178px;
+      overflow: hidden;
+      background: #e8ece9;
+    }
+
+    .category-media::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(10, 14, 16, 0.32));
+    }
+
+    .category-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: auto;
+      transition: transform 240ms ease;
+    }
+
+    .category-card:hover .category-media img {
+      transform: scale(1.035);
+    }
+
+    .category-body {
+      display: grid;
+      gap: 8px;
+      padding: 16px;
+    }
+
+    .category-body strong {
+      font-size: 19px;
+      line-height: 1.15;
+    }
+
+    .category-body span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .shop-toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      width: min(1180px, 100%);
+      margin: 0 auto 24px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: min(320px, 100%);
+      height: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .search-wrap input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(23, 33, 38, 0.06);
+    }
+
+    .product-media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #e8ece9;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: auto;
+      transition: transform 240ms ease;
+    }
+
+    .product-card:hover .product-media img {
+      transform: scale(1.035);
+    }
+
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .product-body {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .product-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.22;
+    }
+
+    .product-copy {
+      margin: 0;
+      min-height: 48px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .price {
+      color: var(--teal-dark);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .product-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .source-grid,
+    .lens-grid,
+    .review-grid,
+    .contact-grid {
+      display: grid;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      gap: 18px;
+    }
+
+    .lens-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .lens-tile,
+    .source-tile,
+    .review-tile,
+    .contact-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .lens-tile {
+      min-height: 230px;
+      padding: 20px;
+    }
+
+    .tile-icon {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      margin-bottom: 18px;
+      color: #fff;
+      background: var(--teal);
+      border-radius: var(--radius);
+    }
+
+    .lens-tile:nth-child(2) .tile-icon {
+      background: var(--blue);
+    }
+
+    .lens-tile:nth-child(3) .tile-icon {
+      background: var(--amber);
+    }
+
+    .lens-tile:nth-child(4) .tile-icon {
+      background: var(--rose);
+    }
+
+    .lens-tile h3,
+    .source-tile h3,
+    .review-tile h3,
+    .contact-panel h3 {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.25;
+    }
+
+    .lens-tile p,
+    .source-tile p,
+    .review-tile p,
+    .contact-panel p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .source-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .source-tile {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      min-height: 190px;
+      overflow: hidden;
+    }
+
+    .source-tile img {
+      width: 100%;
+      height: 100%;
+      min-height: 190px;
+      object-fit: cover;
+    }
+
+    .source-body {
+      padding: 20px;
+    }
+
+    .source-date {
+      color: var(--teal-dark);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .review-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: stretch;
+    }
+
+    .rating-panel {
+      display: grid;
+      align-content: center;
+      min-height: 260px;
+      padding: 28px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--maroon), #9f0d0b);
+      border-radius: var(--radius);
+    }
+
+    .rating-number {
+      display: block;
+      font-size: clamp(54px, 7vw, 82px);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .stars {
+      display: flex;
+      gap: 5px;
+      margin: 12px 0;
+      color: #f5c04e;
+    }
+
+    .rating-panel p {
+      max-width: 360px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .review-tile {
+      padding: 22px;
+    }
+
+    .review-note {
+      margin-top: 16px;
+      padding: 14px;
+      color: #4b3b14;
+      background: #fff4d7;
+      border: 1px solid #efd18a;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .contact-grid {
+      grid-template-columns: minmax(280px, 0.82fr) minmax(360px, 1.18fr);
+    }
+
+    .contact-panel {
+      padding: 24px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin: 22px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .contact-list li {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: var(--muted);
+    }
+
+    .contact-list strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .map-frame {
+      width: 100%;
+      min-height: 420px;
+      border: 0;
+      border-radius: var(--radius);
+      background: var(--line);
+    }
+
+    .site-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 26px clamp(18px, 5vw, 68px);
+      color: rgba(255, 255, 255, 0.72);
+      background: linear-gradient(90deg, #6d0807, #9b0e0a);
+      font-size: 13px;
+    }
+
+    .whatsapp-chat {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 50;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 9px 14px 9px 10px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--maroon), #a20b09);
+      border: 1px solid rgba(242, 200, 109, 0.58);
+      border-radius: var(--radius);
+      box-shadow: 0 16px 34px rgba(118, 10, 8, 0.3);
+      font-weight: 900;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .whatsapp-chat:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #910c0a, #bc1010);
+    }
+
+    .whatsapp-chat-icon {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      color: var(--maroon);
+      background: #fff;
+      border-radius: var(--radius);
+    }
+
+    .whatsapp-chat small {
+      display: block;
+      margin-top: 1px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      background: rgba(10, 14, 16, 0.56);
+    }
+
+    .drawer-backdrop.is-open {
+      display: block;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 70;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      width: min(440px, 100vw);
+      height: 100vh;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      transform: translateX(105%);
+      transition: transform 220ms ease;
+    }
+
+    .cart-drawer.is-open {
+      transform: translateX(0);
+    }
+
+    .drawer-header,
+    .drawer-footer {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-header h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .drawer-footer {
+      border-top: 1px solid var(--line);
+      border-bottom: 0;
+    }
+
+    .cart-items {
+      overflow: auto;
+      padding: 18px;
+    }
+
+    .empty-cart {
+      display: grid;
+      min-height: 260px;
+      place-items: center;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .cart-line {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-line img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: var(--radius);
+    }
+
+    .cart-line h3 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .cart-line p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cart-line-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .qty-control {
+      display: inline-grid;
+      grid-template-columns: 34px 34px 34px;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    .qty-button {
+      width: 34px;
+      min-height: 34px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: #f1f4f1;
+    }
+
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 8px 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .total-line strong {
+      color: var(--ink);
+      font-size: 20px;
+    }
+
+    .checkout-form {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .checkout-form input,
+    .checkout-form textarea,
+    .checkout-form select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      outline: 0;
+      background: var(--surface);
+    }
+
+    .checkout-form input:focus,
+    .checkout-form textarea:focus,
+    .checkout-form select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13, 124, 117, 0.14);
+    }
+
+    .whatsapp-order-button {
+      width: 100%;
+      min-height: 42px;
+      color: #0a5a32;
+      background: #effaf4;
+      border-color: #96d9b5;
+    }
+
+    .whatsapp-order-button:hover {
+      color: #073d23;
+      background: #e1f5ea;
+      border-color: #128c4a;
+    }
+
+    dialog {
+      width: min(640px, calc(100vw - 28px));
+      padding: 0;
+      border: 0;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    dialog::backdrop {
+      background: rgba(10, 14, 16, 0.6);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+
+    .modal-top h2 {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.18;
+    }
+
+    .order-summary {
+      margin-top: 16px;
+      padding: 14px;
+      background: #f1f4f1;
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 92px;
+      z-index: 90;
+      display: none;
+      max-width: 320px;
+      padding: 12px 14px;
+      color: #fff;
+      background: var(--ink);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      font-weight: 800;
+    }
+
+    .toast.is-visible {
+      display: block;
+    }
+
+    @media (max-width: 1020px) {
+      .product-grid,
+      .lens-grid,
+      .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .source-grid,
+      .review-grid,
+      .contact-grid,
+      .shop-toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .search-wrap {
+        min-width: 0;
+      }
+
+      .hero-facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        display: none;
+      }
+
+      .site-header {
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+      }
+
+      .nav-links {
+        grid-column: 1 / -1;
+        justify-content: start;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .hero {
+        min-height: 640px;
+        padding-top: 104px;
+      }
+
+      .hero-facts,
+      .product-grid,
+      .lens-grid,
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-card {
+        min-height: 0;
+      }
+
+      .category-media {
+        aspect-ratio: 16 / 10;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .source-tile {
+        grid-template-columns: 1fr;
+      }
+
+      .source-tile img {
+        aspect-ratio: 16 / 10;
+        min-height: 0;
+      }
+
+      .contact-grid {
+        gap: 14px;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero-actions,
+      .product-actions,
+      .header-actions {
+        width: 100%;
+      }
+
+      .hero-actions .primary-button,
+      .hero-actions .secondary-button,
+      .product-actions .primary-button {
+        width: 100%;
+      }
+
+      .header-actions {
+        justify-content: end;
+      }
+
+      .whatsapp-chat {
+        right: 12px;
+        bottom: 12px;
+        min-height: 52px;
+        padding: 8px;
+      }
+
+      .whatsapp-chat > span:last-child {
+        display: none;
+      }
+
+      .toast {
+        right: 12px;
+        bottom: 76px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar" aria-label="EyeMatic quick facts">
+    <span><i data-lucide="star"></i> Google Maps 5.0 stars</span>
+    <span><i data-lucide="map-pin"></i> New City Phase 2, Wah Cantt</span>
+    <span><i data-lucide="phone"></i> +92 329 1599919</span>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="EyeMatic home">
+      <img class="brand-logo" src="assets/eyematic-logo.svg" alt="EyeMatic official logo">
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#categories">Categories</a>
+      <a href="#shop">Shop</a>
+      <a href="#lenses">Lenses</a>
+      <a href="#updates">Instagram</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <div class="header-actions">
+      <a class="icon-button" href="tel:+923291599919" aria-label="Call EyeMatic" title="Call EyeMatic">
+        <i data-lucide="phone-call"></i>
+      </a>
+      <button class="icon-button" id="openCart" type="button" aria-label="Open cart" title="Open cart">
+        <i data-lucide="shopping-bag"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="EyeMatic eyewear store">
+      <div class="hero-inner">
+        <p class="eyebrow"><i data-lucide="sparkles"></i> New City Phase 2, Wah Cantt</p>
+        <h1>Framing the world for you.</h1>
+        <p class="hero-copy">Your vision. Our passion. A working EyeMatic storefront for men, women, kids, sunglasses, HD lenses, progressive packages, and in-store pickup.</p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#categories"><i data-lucide="shopping-cart"></i> Shop categories</a>
+          <a class="secondary-button" href="#visit"><i data-lucide="map"></i> Store details</a>
+        </div>
+        <div class="hero-facts" aria-label="Verified business details">
+          <div><strong>5.0</strong><span>Google Maps rating shown publicly</span></div>
+          <div><strong>Optician</strong><span>Google Maps category</span></div>
+          <div><strong>3-11 PM</strong><span>Friday hours visible on Maps</span></div>
+          <div><strong>HD lenses</strong><span>Featured in Instagram post</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section category-section" id="categories">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow"><i data-lucide="layout-grid"></i> Shop by customer</p>
+          <h2>Categories for every eyewear need</h2>
+        </div>
+        <p>Customer category cards use Pakistan/Pakistani or South Asian-tagged stock photography where source metadata supports it. Lens packages use a direct eye-exam image for clearer service relevance.</p>
+      </div>
+      <div class="category-grid" aria-label="Eyewear categories">
+        <button class="category-card" type="button" data-category-jump="Men">
+          <span class="category-media"><img src="https://images.pexels.com/photos/7902122/pexels-photo-7902122.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Man wearing optical glasses in Karachi, Pakistan"></span>
+          <span class="category-body"><strong>Men</strong><span>Clean frames, office-ready lenses, and sun options</span></span>
+        </button>
+        <button class="category-card" type="button" data-category-jump="Women">
+          <span class="category-media"><img src="https://images.unsplash.com/photo-1637589422813-859d151a9691?auto=format&fit=crop&w=1400&q=90" alt="Woman wearing glasses from a Pakistani-tagged stock photo"></span>
+          <span class="category-body"><strong>Women</strong><span>Everyday frames, tortoise finishes, and HD lenses</span></span>
+        </button>
+        <button class="category-card" type="button" data-category-jump="Kids">
+          <span class="category-media"><img src="https://images.unsplash.com/photo-1630827223608-dcd7f69871be?auto=format&fit=crop&w=1400&q=90" alt="Child wearing glasses in Burewala, Pakistan"></span>
+          <span class="category-body"><strong>Kids</strong><span>Flexible school frames and practical daily comfort</span></span>
+        </button>
+        <button class="category-card" type="button" data-category-jump="Sunglasses">
+          <span class="category-media"><img src="https://images.pexels.com/photos/12046951/pexels-photo-12046951.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="South Asian man wearing sunglasses in Pakistan"></span>
+          <span class="category-body"><strong>Sunglasses</strong><span>UV-style sun frames and clip-on concepts</span></span>
+        </button>
+        <button class="category-card" type="button" data-category-jump="Lens Packages">
+          <span class="category-media"><img src="https://images.pexels.com/photos/5996745/pexels-photo-5996745.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Eyeglasses on an eye examination chart for lens testing"></span>
+          <span class="category-body"><strong>Lens packages</strong><span>HD, progressive, transmatic, and screen-focused choices</span></span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow"><i data-lucide="scan-eye"></i> Prototype catalog</p>
+          <h2>Frames, sunglasses, and lens packages</h2>
+        </div>
+        <p>Prices are prototype placeholders in PKR. Product groups are based on the eyewear business type and the HD/progressive lens signals from EyeMatic's public Instagram metadata.</p>
+      </div>
+      <div class="shop-toolbar">
+        <div class="filters" id="filters" aria-label="Product filters"></div>
+        <label class="search-wrap" for="productSearch">
+          <i data-lucide="search"></i>
+          <input id="productSearch" type="search" placeholder="Search frames, HD lenses, sunglasses">
+        </label>
+      </div>
+      <div class="product-grid" id="productGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="section section-alt" id="lenses">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow"><i data-lucide="badge-check"></i> Lens desk</p>
+          <h2>Service blocks for an optical store</h2>
+        </div>
+        <p>Built around verified public wording: high definition lenses, New City Phase 2, and progressive lens keywords from the Instagram source.</p>
+      </div>
+      <div class="lens-grid">
+        <article class="lens-tile">
+          <span class="tile-icon"><i data-lucide="ruler"></i></span>
+          <h3>Frame fitting</h3>
+          <p>Face-shape guidance, bridge fit, temple adjustment, and comfort checks before pickup.</p>
+        </article>
+        <article class="lens-tile">
+          <span class="tile-icon"><i data-lucide="scan-line"></i></span>
+          <h3>High definition lenses</h3>
+          <p>Clearer daily-use lenses positioned for customers asking about visual clarity and upgrades.</p>
+        </article>
+        <article class="lens-tile">
+          <span class="tile-icon"><i data-lucide="layers"></i></span>
+          <h3>Progressive packages</h3>
+          <p>Prototype options include HDV progressive and Transmatic Photonic Brown HDV Progressive.</p>
+        </article>
+        <article class="lens-tile">
+          <span class="tile-icon"><i data-lucide="wrench"></i></span>
+          <h3>Repairs and adjustments</h3>
+          <p>Nose pads, screw tightening, cleaning, and everyday frame tuning as in-store services.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="updates">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow"><i data-lucide="instagram"></i> Public Instagram signals</p>
+          <h2>Recent EyeMatic updates</h2>
+        </div>
+        <p>These cards use the public Instagram metadata from the links supplied for this prototype.</p>
+      </div>
+      <div class="source-grid">
+        <article class="source-tile">
+          <img src="https://images.pexels.com/photos/5996745/pexels-photo-5996745.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Eyeglasses on an eye examination chart">
+          <div class="source-body">
+            <span class="source-date">May 14, 2026</span>
+            <h3>High Definition Lenses at EyeMatic</h3>
+            <p>Instagram metadata from @qazi.mati mentions high definition lenses at EyeMatic, New City Phase 2, Wah Cantt.</p>
+            <a class="link-button" href="https://www.instagram.com/p/DYT7P9mIqX7/?hl=id" target="_blank" rel="noopener">Open post <i data-lucide="external-link"></i></a>
+          </div>
+        </article>
+        <article class="source-tile">
+          <img src="https://images.pexels.com/photos/18464947/pexels-photo-18464947.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Eyeglasses displayed in an optical store">
+          <div class="source-body">
+            <span class="source-date">May 12, 2026</span>
+            <h3>EyeMatic, New City Phase 2</h3>
+            <p>The reel metadata identifies EyeMatic at New City Phase 2, Wah Cantt, under the same Instagram account.</p>
+            <a class="link-button" href="https://www.instagram.com/reel/DYO-j7vIz8m/" target="_blank" rel="noopener">Open reel <i data-lucide="external-link"></i></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="reviews">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow"><i data-lucide="messages-square"></i> Customer trust</p>
+          <h2>Google review module</h2>
+        </div>
+        <p>The public Google Maps listing showed a 5.0-star rating. Exact review text was not exposed in the limited public view, so this prototype does not invent customer quotes.</p>
+      </div>
+      <div class="review-grid">
+        <div class="rating-panel" aria-label="Google Maps rating">
+          <span class="rating-number">5.0</span>
+          <span class="stars" aria-label="5 out of 5 stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </span>
+          <p>Google Maps public listing for EyeMatic, category: Optician.</p>
+        </div>
+        <article class="review-tile">
+          <h3>Live-site recommendation</h3>
+          <p>For production, connect a Google Business Profile review widget or approved review API so exact customer reviews, names, dates, and counts stay accurate.</p>
+          <div class="review-note">Prototype rule: verified rating is shown; unverified quote cards are intentionally left out.</div>
+          <p><a class="link-button" href="https://www.google.com/maps/search/EyeMatic+New+City+Phase+2+Wah+Cantt" target="_blank" rel="noopener">Open Google Maps listing <i data-lucide="external-link"></i></a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="visit">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow"><i data-lucide="map-pin"></i> Visit EyeMatic</p>
+          <h2>Store location and contact</h2>
+        </div>
+        <p>Business details are taken from the public Google Maps listing returned for EyeMatic in Wah Cantt.</p>
+      </div>
+      <div class="contact-grid">
+        <article class="contact-panel">
+          <h3>EyeMatic</h3>
+          <p>Optician in New City Phase 2, Wah Cantt.</p>
+          <ul class="contact-list">
+            <li><i data-lucide="map-pin"></i><span><strong>Address</strong>Shop# 5 Ground Floor, Business Icon 2, Main Double Road, Phase 2, New City, Wah Cantt, 47040, Pakistan</span></li>
+            <li><i data-lucide="phone"></i><span><strong>Phone</strong><a href="tel:+923291599919">+92 329 1599919</a></span></li>
+            <li><i data-lucide="clock"></i><span><strong>Visible Friday hours</strong>3-11 PM</span></li>
+            <li><i data-lucide="navigation"></i><span><strong>Plus code</strong>QP3R+FG Wah Cantt, Pakistan</span></li>
+          </ul>
+          <a class="primary-button" href="https://www.google.com/maps/search/EyeMatic+New+City+Phase+2+Wah+Cantt" target="_blank" rel="noopener"><i data-lucide="route"></i> Get directions</a>
+        </article>
+        <iframe class="map-frame" title="EyeMatic location map" loading="lazy" allowfullscreen src="https://www.google.com/maps?q=Shop%23%205%20Ground%20Floor%2C%20Business%20Icon%202%2C%20Main%20Double%20Road%2C%20Phase%202%2C%20New%20City%2C%20Wah%20Cantt%2C%2047040%2C%20Pakistan&output=embed"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>EyeMatic prototype storefront - built as static HTML, CSS, and JavaScript.</span>
+    <span>Images from Unsplash and Pexels; business facts from Google Maps and Instagram metadata.</span>
+  </footer>
+
+  <a class="whatsapp-chat" id="whatsappChat" href="https://wa.me/923291599919?text=Hi%20EyeMatic%2C%20I%20want%20to%20ask%20about%20frames%20and%20lenses." target="_blank" rel="noopener" aria-label="Chat with EyeMatic on WhatsApp">
+    <span class="whatsapp-chat-icon"><i data-lucide="message-circle"></i></span>
+    <span>WhatsApp<small>Ask about frames & lenses</small></span>
+  </a>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" tabindex="-1"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="drawer-header">
+      <h2>Your cart</h2>
+      <button class="icon-button" id="closeCart" type="button" aria-label="Close cart" title="Close cart"><i data-lucide="x"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="drawer-footer">
+      <div class="total-line"><span>Subtotal</span><strong id="cartSubtotal">PKR 0</strong></div>
+      <div class="total-line"><span>Pickup</span><span>Free at EyeMatic</span></div>
+      <form class="checkout-form" id="checkoutForm">
+        <input type="text" name="name" placeholder="Customer name" required>
+        <input type="tel" name="phone" placeholder="Phone number" required>
+        <select name="method" aria-label="Pickup or delivery">
+          <option value="Store pickup">Store pickup</option>
+          <option value="Call before pickup">Call before pickup</option>
+          <option value="Local delivery inquiry">Local delivery inquiry</option>
+        </select>
+        <textarea name="notes" rows="2" placeholder="Prescription, lens notes, or frame size"></textarea>
+        <button class="primary-button" type="submit"><i data-lucide="check-circle"></i> Place prototype order</button>
+        <a class="secondary-button whatsapp-order-button" id="whatsappCartLink" href="https://wa.me/923291599919?text=Hi%20EyeMatic%2C%20I%20want%20to%20ask%20about%20frames%20and%20lenses." target="_blank" rel="noopener"><i data-lucide="message-circle"></i> Send cart on WhatsApp</a>
+      </form>
+    </div>
+  </aside>
+
+  <dialog id="productDialog">
+    <div class="modal-body" id="productDialogBody"></div>
+  </dialog>
+
+  <dialog id="orderDialog">
+    <div class="modal-body">
+      <div class="modal-top">
+        <h2>Prototype order received</h2>
+        <button class="icon-button" type="button" data-close-dialog="orderDialog" aria-label="Close order dialog" title="Close"><i data-lucide="x"></i></button>
+      </div>
+      <p>This is a static website prototype. In production, this checkout should connect to WhatsApp, POS, payment gateway, or an order inbox.</p>
+      <div class="order-summary" id="orderSummary"></div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    const products = [
+      {
+        id: "black-rectangle",
+        name: "Classic Black Rectangle Frame",
+        category: "Frames",
+        price: 5500,
+        image: "https://images.pexels.com/photos/28211039/pexels-photo-28211039.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        description: "Minimal everyday optical frame with a clean rectangular profile.",
+        audience: ["Men", "Women"],
+        lens: "Prescription-ready"
+      },
+      {
+        id: "tortoise-frame",
+        name: "Tortoise Everyday Frame",
+        category: "Frames",
+        price: 6400,
+        image: "https://images.pexels.com/photos/5201984/pexels-photo-5201984.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        description: "Warm tortoise-shell styling for daily wear and office use.",
+        audience: ["Women", "Men"],
+        lens: "Frame only"
+      },
+      {
+        id: "blue-light-office",
+        name: "Blue Light Office Package",
+        category: "Lens Packages",
+        price: 8900,
+        image: "https://images.pexels.com/photos/393044/pexels-photo-393044.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        description: "Frame and lens package for screens, study, and long desk hours.",
+        audience: ["Men", "Women"],
+        lens: "Blue light lens"
+      },
+      {
+        id: "hd-progressive",
+        name: "HD Progressive Lens Package",
+        category: "Lens Packages",
+        price: 14500,
+        image: "https://images.pexels.com/photos/5996745/pexels-photo-5996745.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        description: "High definition progressive option for near, middle, and distance zones.",
+        audience: ["Men", "Women"],
+        lens: "HDV progressive"
+      },
+      {
+        id: "transmatic-brown",
+        name: "Transmatic Photonic Brown HDV",
+        category: "Lens Packages",
+        price: 18500,
+        image: "https://images.pexels.com/photos/5996747/pexels-photo-5996747.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        description: "Premium brown adaptive progressive package inspired by the Instagram product keywords.",
+        audience: ["Men", "Women"],
+        lens: "Photonic Brown HDV"
+      },
+      {
+        id: "uv400-sunglass",
+        name: "Premium UV400 Sunglass",
+        category: "Sunglasses",
+        price: 6900,
+        image: "https://images.pexels.com/photos/704241/pexels-photo-704241.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        description: "Lightweight sun frame with UV400-style positioning for outdoor use.",
+        audience: ["Men", "Women"],
+        lens: "Tinted sun lens"
+      },
+      {
+        id: "clipon-combo",
+        name: "Clip-On Sun Frame Combo",
+        category: "Sunglasses",
+        price: 7800,
+        image: "https://images.unsplash.com/photo-1691414920083-1019baa8fa36?auto=format&fit=crop&w=1400&q=90",
+        description: "Prescription-friendly frame concept with quick sun-cover convenience.",
+        audience: ["Men", "Women"],
+        lens: "Clip-on tint"
+      },
+      {
+        id: "kids-flex",
+        name: "Kids Flexible Frame",
+        category: "Kids",
+        price: 4900,
+        image: "https://images.pexels.com/photos/3891014/pexels-photo-3891014.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        description: "Durable lightweight frame concept for school and daily child use.",
+        audience: ["Kids"],
+        lens: "Impact-conscious frame"
+      }
+    ];
+
+    const categories = ["All", "Men", "Women", "Kids", "Sunglasses", "Frames", "Lens Packages"];
+    const productGrid = document.getElementById("productGrid");
+    const filters = document.getElementById("filters");
+    const searchInput = document.getElementById("productSearch");
+    const cartDrawer = document.getElementById("cartDrawer");
+    const drawerBackdrop = document.getElementById("drawerBackdrop");
+    const cartItems = document.getElementById("cartItems");
+    const cartCount = document.getElementById("cartCount");
+    const cartSubtotal = document.getElementById("cartSubtotal");
+    const toast = document.getElementById("toast");
+    const productDialog = document.getElementById("productDialog");
+    const productDialogBody = document.getElementById("productDialogBody");
+    const checkoutForm = document.getElementById("checkoutForm");
+    const orderDialog = document.getElementById("orderDialog");
+    const orderSummary = document.getElementById("orderSummary");
+    const whatsappChat = document.getElementById("whatsappChat");
+    const whatsappCartLink = document.getElementById("whatsappCartLink");
+    const whatsappNumber = "923291599919";
+    const defaultWhatsappMessage = "Hi EyeMatic, I want to ask about frames and lenses.";
+
+    let activeCategory = "All";
+    let cart = JSON.parse(localStorage.getItem("eyematic-cart") || "[]");
+
+    const money = (amount) => new Intl.NumberFormat("en-PK", {
+      style: "currency",
+      currency: "PKR",
+      maximumFractionDigits: 0
+    }).format(amount).replace("Rs", "PKR");
+
+    function saveCart() {
+      localStorage.setItem("eyematic-cart", JSON.stringify(cart));
+    }
+
+    function refreshIcons() {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("is-visible"), 2200);
+    }
+
+    function whatsappUrl(message) {
+      return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    }
+
+    function cartWhatsappMessage() {
+      if (!cart.length) {
+        return defaultWhatsappMessage;
+      }
+
+      const itemLines = cart.map((item) => {
+        const product = findProduct(item.id);
+        return product ? `${item.quantity} x ${product.name} - ${money(product.price * item.quantity)}` : "";
+      }).filter(Boolean).join("\n");
+      const totals = cartTotals();
+      return `Hi EyeMatic, I want to ask about this cart:\n${itemLines}\nSubtotal: ${money(totals.subtotal)}\nPickup: EyeMatic New City Phase 2, Wah Cantt`;
+    }
+
+    function updateWhatsappLinks() {
+      const cartMessage = cartWhatsappMessage();
+      whatsappChat.href = whatsappUrl(defaultWhatsappMessage);
+      whatsappCartLink.href = whatsappUrl(cartMessage);
+      whatsappCartLink.textContent = cart.length ? "Send cart on WhatsApp" : "Ask on WhatsApp";
+      whatsappCartLink.insertAdjacentHTML("afterbegin", '<i data-lucide="message-circle"></i> ');
+    }
+
+    function syncCategoryCards() {
+      document.querySelectorAll("[data-category-jump]").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.categoryJump === activeCategory);
+      });
+    }
+
+    function renderFilters() {
+      filters.innerHTML = categories.map((category) => `
+        <button class="filter-button ${category === activeCategory ? "is-active" : ""}" type="button" data-category="${category}">
+          ${category}
+        </button>
+      `).join("");
+      syncCategoryCards();
+    }
+
+    function filteredProducts() {
+      const term = searchInput.value.trim().toLowerCase();
+      return products.filter((product) => {
+        const tags = [product.category, ...(product.audience || [])];
+        const matchesCategory = activeCategory === "All" || tags.includes(activeCategory);
+        const haystack = `${product.name} ${tags.join(" ")} ${product.description} ${product.lens}`.toLowerCase();
+        return matchesCategory && haystack.includes(term);
+      });
+    }
+
+    function renderProducts() {
+      const list = filteredProducts();
+      productGrid.innerHTML = list.length ? list.map((product) => `
+        <article class="product-card">
+          <div class="product-media">
+            <img src="${product.image}" alt="${product.name}" loading="lazy">
+            <span class="badge">${product.category}</span>
+          </div>
+          <div class="product-body">
+            <div>
+              <h3 class="product-title">${product.name}</h3>
+              <p class="product-copy">${product.description}</p>
+            </div>
+            <div class="product-meta">
+              <span class="price">${money(product.price)}</span>
+              <span>${product.lens}</span>
+            </div>
+            <div class="product-actions">
+              <button class="primary-button" type="button" data-add="${product.id}"><i data-lucide="shopping-cart"></i> Add</button>
+              <button class="icon-button" type="button" data-view="${product.id}" aria-label="View ${product.name}" title="View details"><i data-lucide="eye"></i></button>
+            </div>
+          </div>
+        </article>
+      `).join("") : `<p>No products match this search.</p>`;
+      refreshIcons();
+    }
+
+    function findProduct(id) {
+      return products.find((product) => product.id === id);
+    }
+
+    function addToCart(id) {
+      const existing = cart.find((item) => item.id === id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ id, quantity: 1 });
+      }
+      saveCart();
+      renderCart();
+      const product = findProduct(id);
+      showToast(`${product.name} added to cart`);
+    }
+
+    function updateQuantity(id, quantity) {
+      if (quantity <= 0) {
+        cart = cart.filter((item) => item.id !== id);
+      } else {
+        const item = cart.find((line) => line.id === id);
+        if (item) item.quantity = quantity;
+      }
+      saveCart();
+      renderCart();
+    }
+
+    function cartTotals() {
+      const subtotal = cart.reduce((sum, item) => {
+        const product = findProduct(item.id);
+        return sum + (product ? product.price * item.quantity : 0);
+      }, 0);
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      return { subtotal, count };
+    }
+
+    function renderCart() {
+      const totals = cartTotals();
+      cartCount.textContent = totals.count;
+      cartSubtotal.textContent = money(totals.subtotal);
+      updateWhatsappLinks();
+
+      if (!cart.length) {
+        cartItems.innerHTML = `
+          <div class="empty-cart">
+            <div>
+              <i data-lucide="shopping-bag"></i>
+              <p>Your EyeMatic cart is empty.</p>
+            </div>
+          </div>
+        `;
+        refreshIcons();
+        return;
+      }
+
+      cartItems.innerHTML = cart.map((item) => {
+        const product = findProduct(item.id);
+        return `
+          <article class="cart-line">
+            <img src="${product.image}" alt="${product.name}">
+            <div>
+              <h3>${product.name}</h3>
+              <p>${product.lens}</p>
+              <div class="cart-line-bottom">
+                <div class="qty-control" aria-label="Quantity for ${product.name}">
+                  <button class="qty-button" type="button" data-qty="${product.id}" data-step="-1" aria-label="Decrease quantity"><i data-lucide="minus"></i></button>
+                  <span>${item.quantity}</span>
+                  <button class="qty-button" type="button" data-qty="${product.id}" data-step="1" aria-label="Increase quantity"><i data-lucide="plus"></i></button>
+                </div>
+                <strong>${money(product.price * item.quantity)}</strong>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+      refreshIcons();
+    }
+
+    function setCartOpen(open) {
+      cartDrawer.classList.toggle("is-open", open);
+      drawerBackdrop.classList.toggle("is-open", open);
+      cartDrawer.setAttribute("aria-hidden", String(!open));
+      if (open) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    }
+
+    function openProductDialog(id) {
+      const product = findProduct(id);
+      productDialogBody.innerHTML = `
+        <div class="modal-top">
+          <div>
+            <h2>${product.name}</h2>
+            <p>${product.category} - ${product.lens}</p>
+          </div>
+          <button class="icon-button" type="button" data-close-dialog="productDialog" aria-label="Close product dialog" title="Close"><i data-lucide="x"></i></button>
+        </div>
+        <img src="${product.image}" alt="${product.name}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;">
+        <p>${product.description}</p>
+        <p><strong>${money(product.price)}</strong></p>
+        <button class="primary-button" type="button" data-add="${product.id}"><i data-lucide="shopping-cart"></i> Add to cart</button>
+      `;
+      refreshIcons();
+      productDialog.showModal();
+    }
+
+    filters.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-category]");
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      renderFilters();
+      renderProducts();
+    });
+
+    document.querySelectorAll("[data-category-jump]").forEach((button) => {
+      button.addEventListener("click", () => {
+        activeCategory = button.dataset.categoryJump;
+        searchInput.value = "";
+        renderFilters();
+        renderProducts();
+        document.getElementById("shop").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    productGrid.addEventListener("click", (event) => {
+      const addButton = event.target.closest("[data-add]");
+      const viewButton = event.target.closest("[data-view]");
+      if (addButton) addToCart(addButton.dataset.add);
+      if (viewButton) openProductDialog(viewButton.dataset.view);
+    });
+
+    productDialogBody.addEventListener("click", (event) => {
+      const addButton = event.target.closest("[data-add]");
+      const closeButton = event.target.closest("[data-close-dialog]");
+      if (addButton) addToCart(addButton.dataset.add);
+      if (closeButton) productDialog.close();
+    });
+
+    searchInput.addEventListener("input", renderProducts);
+    document.getElementById("openCart").addEventListener("click", () => setCartOpen(true));
+    document.getElementById("closeCart").addEventListener("click", () => setCartOpen(false));
+    drawerBackdrop.addEventListener("click", () => setCartOpen(false));
+
+    cartItems.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-qty]");
+      if (!button) return;
+      const item = cart.find((line) => line.id === button.dataset.qty);
+      if (!item) return;
+      updateQuantity(item.id, item.quantity + Number(button.dataset.step));
+    });
+
+    checkoutForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!cart.length) {
+        showToast("Add at least one item before checkout");
+        return;
+      }
+      const data = new FormData(checkoutForm);
+      const totals = cartTotals();
+      const itemList = cart.map((item) => {
+        const product = findProduct(item.id);
+        return `${item.quantity} x ${product.name}`;
+      }).join("<br>");
+      orderSummary.innerHTML = `
+        <strong>${data.get("name")}</strong><br>
+        ${data.get("phone")}<br>
+        ${data.get("method")}<br><br>
+        ${itemList}<br><br>
+        Total: <strong>${money(totals.subtotal)}</strong><br>
+        Notes: ${data.get("notes") || "None"}
+      `;
+      orderDialog.showModal();
+      setCartOpen(false);
+      cart = [];
+      saveCart();
+      renderCart();
+      checkoutForm.reset();
+    });
+
+    document.addEventListener("click", (event) => {
+      const closeButton = event.target.closest("[data-close-dialog]");
+      if (!closeButton) return;
+      const dialog = document.getElementById(closeButton.dataset.closeDialog);
+      if (dialog) dialog.close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setCartOpen(false);
+      }
+    });
+
+    renderFilters();
+    renderProducts();
+    renderCart();
+    refreshIcons();
+  </script>
+</body>
+</html>
