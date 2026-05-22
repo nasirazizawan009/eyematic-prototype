@@ -244,23 +244,57 @@
     }
 
     .hero {
+      position: relative;
+      isolation: isolate;
       min-height: 680px;
       display: grid;
       align-items: end;
+      overflow: hidden;
       padding: clamp(70px, 10vw, 126px) clamp(18px, 5vw, 68px) 38px;
       color: #fff;
+      background: var(--night);
+      --hero-parallax-x: 0px;
+      --hero-parallax-y: 0px;
+    }
+
+    .hero::before,
+    .hero::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero::before {
+      z-index: -2;
+      inset: -5%;
+      background-image: url("https://images.pexels.com/photos/31623365/pexels-photo-31623365.jpeg?auto=compress&cs=tinysrgb&w=1800");
+      background-position: 62% center;
+      background-size: cover;
+      filter: grayscale(1) contrast(1.08) brightness(0.72);
+      transform: translate3d(var(--hero-parallax-x), var(--hero-parallax-y), 0) scale(1.05);
+      transform-origin: 58% center;
+      animation: heroImageDrift 18s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+
+    .hero::after {
+      z-index: -1;
       background-image:
         linear-gradient(90deg, rgba(7, 11, 16, 0.96) 0%, rgba(7, 11, 16, 0.86) 42%, rgba(7, 11, 16, 0.28) 78%),
         radial-gradient(circle at 28% 12%, rgba(117, 104, 255, 0.28), transparent 34%),
         linear-gradient(rgba(117, 104, 255, 0.18) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(117, 104, 255, 0.18) 1px, transparent 1px),
-        url("https://images.pexels.com/photos/31623365/pexels-photo-31623365.jpeg?auto=compress&cs=tinysrgb&w=1800");
-      background-position: center, center, center, center, 62% center;
-      background-size: auto, auto, 56px 56px, 56px 56px, cover;
+        linear-gradient(90deg, rgba(117, 104, 255, 0.18) 1px, transparent 1px);
+      background-position: center, center, center, center;
+      background-size: auto, auto, 56px 56px, 56px 56px;
+      animation: heroGridFloat 22s linear infinite;
     }
 
     .hero-inner {
+      position: relative;
+      z-index: 1;
       width: min(1120px, 100%);
+      animation: heroContentIn 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
 
     .eyebrow {
@@ -331,18 +365,23 @@
       padding: 16px;
       background: rgba(11, 17, 20, 0.48);
       border-top: 3px solid var(--aqua);
+      animation: heroStatIn 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      animation-delay: 180ms;
     }
 
     .hero-facts div:nth-child(2) {
       border-top-color: var(--amber);
+      animation-delay: 260ms;
     }
 
     .hero-facts div:nth-child(3) {
       border-top-color: var(--rose);
+      animation-delay: 340ms;
     }
 
     .hero-facts div:nth-child(4) {
       border-top-color: var(--blue);
+      animation-delay: 420ms;
     }
 
     .hero-facts strong {
@@ -357,6 +396,46 @@
       color: rgba(255, 255, 255, 0.78);
       font-size: 13px;
       font-weight: 700;
+    }
+
+    @keyframes heroImageDrift {
+      from {
+        transform: translate3d(var(--hero-parallax-x), var(--hero-parallax-y), 0) scale(1.05);
+      }
+      to {
+        transform: translate3d(calc(var(--hero-parallax-x) - 12px), calc(var(--hero-parallax-y) - 7px), 0) scale(1.1);
+      }
+    }
+
+    @keyframes heroGridFloat {
+      from {
+        background-position: center, center, 0 0, 0 0;
+      }
+      to {
+        background-position: center, center, 56px 56px, 56px 56px;
+      }
+    }
+
+    @keyframes heroContentIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes heroStatIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .section {
@@ -1143,6 +1222,10 @@
         padding-top: 104px;
       }
 
+      .hero::before {
+        background-position: 54% center;
+      }
+
       .hero-facts,
       .product-grid,
       .lens-grid,
@@ -1219,6 +1302,21 @@
       .toast {
         right: 12px;
         bottom: 76px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+      }
+
+      .hero::before {
+        transform: scale(1.05);
       }
     }
   </style>
@@ -1888,6 +1986,23 @@
         setCartOpen(false);
       }
     });
+
+    const hero = document.querySelector(".hero");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (hero && !reducedMotion.matches) {
+      hero.addEventListener("pointermove", (event) => {
+        const rect = hero.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width - 0.5) * 24;
+        const y = ((event.clientY - rect.top) / rect.height - 0.5) * 16;
+        hero.style.setProperty("--hero-parallax-x", `${x.toFixed(2)}px`);
+        hero.style.setProperty("--hero-parallax-y", `${y.toFixed(2)}px`);
+      });
+
+      hero.addEventListener("pointerleave", () => {
+        hero.style.setProperty("--hero-parallax-x", "0px");
+        hero.style.setProperty("--hero-parallax-y", "0px");
+      });
+    }
 
     renderFilters();
     renderProducts();
