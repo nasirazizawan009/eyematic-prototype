@@ -12,19 +12,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #17100c;
-      --muted: #6f5e4e;
-      --line: #d8bd8d;
-      --paper: #f3dfc9;
-      --surface: #fff8ef;
-      --teal: #b50909;
-      --teal-dark: #7b0908;
-      --amber: #c28a22;
-      --blue: #9a6a1e;
-      --rose: #a90909;
-      --gold: #c28a22;
+      --ink: #0e1315;
+      --muted: #62716d;
+      --line: #d8d1c2;
+      --paper: #f4eee4;
+      --surface: #fffaf1;
+      --teal: #08745f;
+      --teal-dark: #044f42;
+      --amber: #f3ae34;
+      --blue: #2aaee4;
+      --rose: #9b2e71;
+      --gold: #f3ae34;
       --maroon: #760a08;
-      --shadow: 0 18px 40px rgba(82, 32, 18, 0.16);
+      --night: #070b10;
+      --violet: #7568ff;
+      --aqua: #13d7bd;
+      --shadow: 0 18px 40px rgba(10, 17, 18, 0.13);
       --radius: 8px;
     }
 
@@ -38,7 +41,11 @@
 
     body {
       margin: 0;
-      background: var(--paper);
+      background:
+        linear-gradient(rgba(8, 116, 95, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 116, 95, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 48px 48px, 48px 48px, auto;
       color: var(--ink);
       font-family: "Inter", Arial, sans-serif;
       font-size: 16px;
@@ -88,8 +95,8 @@
       grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: 24px;
-      padding: 14px clamp(18px, 4vw, 56px);
-      background: rgba(255, 248, 239, 0.94);
+      padding: 12px clamp(18px, 4vw, 56px);
+      background: rgba(255, 250, 241, 0.95);
       border-bottom: 1px solid var(--line);
       backdrop-filter: blur(12px);
     }
@@ -118,33 +125,9 @@
     }
 
     .brand-logo {
-      width: 86px;
+      width: clamp(92px, 8vw, 118px);
       height: auto;
       object-fit: contain;
-    }
-
-    .brand-copy {
-      display: grid;
-      gap: 1px;
-      line-height: 1;
-      min-width: 0;
-    }
-
-    .brand-copy strong {
-      color: var(--maroon);
-      font-size: 21px;
-      letter-spacing: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .brand small {
-      display: block;
-      color: var(--ink);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
 
     .nav-links {
@@ -219,13 +202,15 @@
 
     .primary-button {
       padding: 0 18px;
-      color: #fff;
+      color: #03110e;
       background: var(--teal);
+      background: linear-gradient(135deg, var(--aqua), var(--amber));
+      box-shadow: 0 14px 30px rgba(8, 116, 95, 0.24);
     }
 
     .primary-button:hover {
       transform: translateY(-1px);
-      background: var(--teal-dark);
+      background: linear-gradient(135deg, #19f0d2, #f7bb45);
     }
 
     .secondary-button,
@@ -254,19 +239,24 @@
 
     .filter-button.is-active {
       color: #fff;
-      background: var(--ink);
-      border-color: var(--ink);
+      background: var(--night);
+      border-color: var(--night);
     }
 
     .hero {
-      min-height: 620px;
+      min-height: 680px;
       display: grid;
       align-items: end;
       padding: clamp(70px, 10vw, 126px) clamp(18px, 5vw, 68px) 38px;
       color: #fff;
-      background:
-        linear-gradient(90deg, rgba(65, 10, 7, 0.9), rgba(99, 17, 10, 0.62) 45%, rgba(99, 17, 10, 0.16)),
-        url("https://images.pexels.com/photos/32593248/pexels-photo-32593248.jpeg?auto=compress&cs=tinysrgb&w=1800") center/cover;
+      background-image:
+        linear-gradient(90deg, rgba(7, 11, 16, 0.96) 0%, rgba(7, 11, 16, 0.86) 42%, rgba(7, 11, 16, 0.28) 78%),
+        radial-gradient(circle at 28% 12%, rgba(117, 104, 255, 0.28), transparent 34%),
+        linear-gradient(rgba(117, 104, 255, 0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(117, 104, 255, 0.18) 1px, transparent 1px),
+        url("https://images.pexels.com/photos/31623365/pexels-photo-31623365.jpeg?auto=compress&cs=tinysrgb&w=1800");
+      background-position: center, center, center, center, 62% center;
+      background-size: auto, auto, 56px 56px, 56px 56px, cover;
     }
 
     .hero-inner {
@@ -278,17 +268,27 @@
       align-items: center;
       gap: 8px;
       margin: 0 0 14px;
-      color: #f2c86d;
+      padding: 7px 12px;
+      color: var(--aqua);
+      background: rgba(13, 18, 33, 0.72);
+      border: 1px solid rgba(117, 104, 255, 0.62);
+      border-radius: var(--radius);
       font-size: 13px;
       font-weight: 800;
       letter-spacing: 0.09em;
       text-transform: uppercase;
     }
 
+    .section .eyebrow {
+      color: var(--teal-dark);
+      background: rgba(8, 116, 95, 0.08);
+      border-color: rgba(8, 116, 95, 0.22);
+    }
+
     .hero h1 {
       max-width: 760px;
       margin: 0;
-      font-size: clamp(44px, 7vw, 84px);
+      font-size: clamp(46px, 7vw, 86px);
       line-height: 0.96;
       letter-spacing: 0;
     }
@@ -322,14 +322,27 @@
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(11, 15, 28, 0.72);
       backdrop-filter: blur(10px);
     }
 
     .hero-facts div {
       min-height: 94px;
       padding: 16px;
-      background: rgba(11, 17, 20, 0.32);
+      background: rgba(11, 17, 20, 0.48);
+      border-top: 3px solid var(--aqua);
+    }
+
+    .hero-facts div:nth-child(2) {
+      border-top-color: var(--amber);
+    }
+
+    .hero-facts div:nth-child(3) {
+      border-top-color: var(--rose);
+    }
+
+    .hero-facts div:nth-child(4) {
+      border-top-color: var(--blue);
     }
 
     .hero-facts strong {
@@ -351,7 +364,7 @@
     }
 
     .section-alt {
-      background: #ecd4b8;
+      background: #ebe0cf;
     }
 
     .section-header {
@@ -399,17 +412,34 @@
       text-align: left;
       background: var(--surface);
       border: 1px solid var(--line);
+      border-top: 4px solid var(--teal);
       border-radius: var(--radius);
       cursor: pointer;
       box-shadow: 0 8px 24px rgba(23, 33, 38, 0.06);
       transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
     }
 
+    .category-card:nth-child(2) {
+      border-top-color: var(--rose);
+    }
+
+    .category-card:nth-child(3) {
+      border-top-color: var(--amber);
+    }
+
+    .category-card:nth-child(4) {
+      border-top-color: var(--blue);
+    }
+
+    .category-card:nth-child(5) {
+      border-top-color: var(--violet);
+    }
+
     .category-card:hover,
     .category-card.is-active {
       transform: translateY(-2px);
       border-color: var(--teal);
-      box-shadow: 0 14px 34px rgba(23, 33, 38, 0.12);
+      box-shadow: 0 18px 38px rgba(8, 116, 95, 0.16);
     }
 
     .category-card:focus-visible {
@@ -509,6 +539,7 @@
       overflow: hidden;
       background: var(--surface);
       border: 1px solid var(--line);
+      border-top: 3px solid rgba(8, 116, 95, 0.55);
       border-radius: var(--radius);
       box-shadow: 0 8px 24px rgba(23, 33, 38, 0.06);
     }
@@ -1104,15 +1135,7 @@
       }
 
       .brand-logo {
-        width: 58px;
-      }
-
-      .brand-copy strong {
-        font-size: 17px;
-      }
-
-      .brand small {
-        font-size: 7px;
+        width: 96px;
       }
 
       .hero {
@@ -1175,19 +1198,11 @@
       }
 
       .brand {
-        gap: 8px;
+        gap: 0;
       }
 
       .brand-logo {
-        width: 50px;
-      }
-
-      .brand-copy strong {
-        font-size: 16px;
-      }
-
-      .brand small {
-        display: none;
+        width: 84px;
       }
 
       .whatsapp-chat {
@@ -1218,10 +1233,6 @@
   <header class="site-header">
     <a class="brand" href="#top" aria-label="EyeMatic home">
       <img class="brand-logo" src="assets/eyematic-logo.svg" alt="EyeMatic frame mark">
-      <span class="brand-copy">
-        <strong>EyeMatic</strong>
-        <small>Framing the world for you</small>
-      </span>
     </a>
     <nav class="nav-links" aria-label="Primary navigation">
       <a href="#categories">Categories</a>
@@ -1247,7 +1258,7 @@
       <div class="hero-inner">
         <p class="eyebrow"><i data-lucide="sparkles"></i> New City Phase 2, Wah Cantt</p>
         <h1>Framing the world for you.</h1>
-        <p class="hero-copy">Your vision. Our passion. A working EyeMatic storefront for men, women, kids, sunglasses, HD lenses, progressive packages, and in-store pickup.</p>
+        <p class="hero-copy">EyeMatic brings premium frames, HD lenses, sunglasses, and precise fitting support to New City Phase 2, Wah Cantt.</p>
         <div class="hero-actions">
           <a class="primary-button" href="#categories"><i data-lucide="shopping-cart"></i> Shop categories</a>
           <a class="secondary-button" href="#visit"><i data-lucide="map"></i> Store details</a>
